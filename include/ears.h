@@ -9,6 +9,7 @@ class Ears {
         ~Ears();
     
     private:
+        RtAudio audio;
         
 };
 
