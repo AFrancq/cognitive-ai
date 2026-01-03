@@ -8,7 +8,7 @@ sensory and vocal capabilities.
 #define CHEF_H
 
 #include <set>
-#include "ears.h"
+#include "ear.h"
 #include "voice.h"
 
 class Chef {
@@ -17,11 +17,11 @@ class Chef {
         ~Chef();
 
     protected:
-        void addEar(const Ears& ear);
+        void addEar(const Ear& ear);
         void addVoice(const Voice& voice);
 
     private:
-        std::set<Ears> ears;
+        std::set<Ear> ears;
         Voice voice;
 };
 
