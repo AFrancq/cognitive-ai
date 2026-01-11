@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 4.2.0)
 project(HaveYouHeardOfChef)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # Setup CPM
 file(DOWNLOAD
   https://github.com/cpm-cmake/CPM.cmake/releases/latest/download/CPM.cmake
@@ -14,5 +17,18 @@ CPMFindPackage(
   GIT_TAG 6.0.1
 )
 
-add_executable(chef src/main.cpp)
+# Source files
+set(SOURCES
+  src/main.cpp
+  src/bodypart.cpp
+  src/body.cpp
+  src/brain.cpp
+  src/ear.cpp
+)
+
+add_executable(chef ${SOURCES})
+target_include_directories(chef PRIVATE 
+  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_BINARY_DIR}/_deps/rtaudio-src
+)
 target_link_libraries(chef PRIVATE rtaudio)
