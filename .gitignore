@@ -62,3 +62,6 @@ ehthumbs.db
 Thumbs.db
 
 .vscode/
+
+# CMake files
+CPM.cmake
