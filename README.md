@@ -1,2 +1,2 @@
 # Build
-Run cmake -B build -S .
+cmake -B build -S .
