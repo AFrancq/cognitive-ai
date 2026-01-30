@@ -23,8 +23,7 @@ void signalHandler(int signum) {
 }
 
 int main(int argc, char **argv) {
-    std::cout << "=== Have You Heard of Chef? ===" << std::endl;
-    std::cout << "AI Sous Chef Audio System Demo" << std::endl;
+    std::cout << "=== Chef ===" << std::endl;
     std::cout << std::endl;
 
     // Setup signal handler for graceful shutdown

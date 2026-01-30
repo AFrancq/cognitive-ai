@@ -29,6 +29,5 @@ set(SOURCES
 add_executable(chef ${SOURCES})
 target_include_directories(chef PRIVATE 
   ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_BINARY_DIR}/_deps/rtaudio-src
 )
 target_link_libraries(chef PRIVATE rtaudio)
