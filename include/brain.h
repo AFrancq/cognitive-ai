@@ -10,12 +10,8 @@ from sensory inputs like the ear.
 #ifndef BRAIN_H
 #define BRAIN_H
 
-#include <RtAudio.h>
-#include <vector>
-#include <queue>
-#include <mutex>
-#include <functional>
-#include <string>
+#include <component.h>
+#include <memory>
 
 class Brain {
     public:
@@ -23,10 +19,27 @@ class Brain {
         ~Brain();
 
         // Initialize the brain and its internal audio processing
-        bool initialize();
+        bool initialize() {
+            if(!initializeAudioComponent()) return false;
+            if(!initializeVideoComponent()) return false;
+            if(!initializeMemoryComponent()) return false;
+            return true;
+        }
 
         // Shutdown the brain
-        void shutdown();
+        void shutdown() {
+            if (audioInput && audioInput->isActive()) {
+                audioInput->shutdown();
+            }
+            if (videoInput && videoInput->isActive()) {
+                videoInput->shutdown();
+            }
+            if (memoryStore && memoryStore->isActive()) {
+                memoryStore->shutdown();
+            }
+            active = false;
+        }
+        
 
         // Display information about the brain
         void info() const;
@@ -34,38 +47,16 @@ class Brain {
         // Check if the brain is active
         bool isActive() const { return active; }
 
-        // Receive audio data from sensory inputs (like ears)
-        // This is the callback target for audio streams
-        void receiveAudioData(const float* inputBuffer, unsigned int nFrames, 
-                              unsigned int nChannels, double streamTime);
-
-        // Get the sample rate used for internal processing
-        unsigned int getSampleRate() const { return sampleRate; }
-
-        // Get the buffer size used for internal processing
-        unsigned int getBufferFrames() const { return bufferFrames; }
-
-        // Register a callback for when audio data is processed
-        using AudioProcessCallback = std::function<void(const std::vector<float>&)>;
-        void setAudioProcessCallback(AudioProcessCallback callback);
-
     private:
         bool active = false;
 
-        // Audio processing parameters
-        unsigned int sampleRate = 44100;
-        unsigned int bufferFrames = 512;
-        unsigned int numChannels = 1;
+        std::unique_ptr<Component> audioInput;
+        std::unique_ptr<Component> videoInput;
+        std::unique_ptr<Component> memoryStore;
 
-        // Audio buffer for storing incoming data
-        std::queue<std::vector<float>> audioQueue;
-        std::mutex audioMutex;
-
-        // Callback for processed audio
-        AudioProcessCallback audioProcessCallback;
-
-        // Process queued audio data
-        void processAudioQueue();
+        bool initializeAudioComponent();
+        bool initializeVideoComponent();
+        bool initializeMemoryComponent();
 };
 
 #endif // BRAIN_H

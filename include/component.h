@@ -1,12 +1,12 @@
 /*
-Bodypart class header file
+Component class header file
 
-Virtual class representing a body part.
-Each body part has a reference to the brain for sending sensory data.
+Virtual class representing a component.
+Each component has a reference to the brain for sending sensory data.
 */
 
-#ifndef BODYPART_H
-#define BODYPART_H
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
 #include <string>
 #include <memory>
@@ -14,21 +14,21 @@ Each body part has a reference to the brain for sending sensory data.
 // Forward declaration
 class Brain;
 
-class Bodypart {
+class Component {
     public:
-        Bodypart();
-        virtual ~Bodypart() = default;
+        Component();
+        virtual ~Component() = default;
 
-        // Display information about the body part
+        // Display information about the component
         virtual void info() const = 0;
 
-        // Initialize the body part
+        // Initialize the component
         virtual bool initialize() = 0;
 
-        // Shutdown the body part
+        // Shutdown the component
         virtual void shutdown() = 0;
 
-        // Check if the body part is active
+        // Check if the component is active
         virtual bool isActive() const { return active; }
 
         // Set the brain reference for sending data
@@ -39,9 +39,6 @@ class Bodypart {
         bool active = false;
         unsigned int id;
         std::string name;
-
-    private:
-        static unsigned int nextId;
 };
 
-#endif // BODYPART_H
+#endif // COMPONENT_H
