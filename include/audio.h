@@ -1,25 +1,25 @@
 /*
-Ear class header file
+Audio class header file
 
-The Ear class represents an audio input device that captures sound
+The Audio class represents an audio input device that captures sound
 and streams it to the Brain for processing.
 */
 
-#ifndef EAR_H
-#define EAR_H
+#ifndef AUDIO_H
+#define AUDIO_H
 
 #include <RtAudio.h>
 #include <memory>
 #include <string>
-#include "bodypart.h"
+#include "component.h"
 
-class Ear : public Bodypart {
+class Audio : public Component {
     public:
         // Constructor with device ID (uses default device if not specified)
-        Ear(unsigned int deviceId = 0);
-        ~Ear() override;
+        Audio(unsigned int deviceId = 0);
+        ~Audio() override;
 
-        // Bodypart interface implementation
+        // Component interface implementation
         void info() const override;
         bool initialize() override;
         void shutdown() override;
